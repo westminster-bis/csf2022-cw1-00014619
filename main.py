@@ -1,5 +1,5 @@
-#source https://www.edureka.co/blog/snake-game-with-pygame/
-#Task:
+# source https://www.edureka.co/blog/snake-game-with-pygame/
+# Task:
 # Demonstrate your knowledge of Python by modifying a small simple game, “Hungry Snake”, where you need to demonstrate your knowledge of
 # python syntax, use of 3 different data types, conditionals, loop, functions. Well commented and organised code will receive higher marks.
 # Procedural or object-oriented approach to programming is appreciated. Modifications can include input from the  user, adding different levels
@@ -24,12 +24,12 @@ dis_width = 600
 dis_height = 400
 
 dis = pygame.display.set_mode((dis_width, dis_height))
-pygame.display.set_caption('Snake Game by Edureka')
+pygame.display.set_caption("Snake Game by Edureka")
 
 clock = pygame.time.Clock()
 
 snake_block = 10
-snake_speed = 15
+snake_speed = 9
 
 font_style = pygame.font.SysFont("bahnschrift", 25)
 score_font = pygame.font.SysFont("comicsansms", 35)
@@ -62,6 +62,8 @@ def gameLoop():
 
     snake_List = []
     Length_of_snake = 1
+    P_Length_of_snake = 0
+    increase_speed = 0
 
     foodx = round(random.randrange(0, dis_width - snake_block) / 10.0) * 10.0
     foody = round(random.randrange(0, dis_height - snake_block) / 10.0) * 10.0
@@ -126,7 +128,10 @@ def gameLoop():
             foody = round(random.randrange(0, dis_height - snake_block) / 10.0) * 10.0
             Length_of_snake += 1
 
-        clock.tick(snake_speed)
+        if Length_of_snake % 7 == 0 and P_Length_of_snake != Length_of_snake:
+            P_Length_of_snake = Length_of_snake
+            increase_speed += 5
+        clock.tick(snake_speed + increase_speed)
 
     pygame.quit()
     quit()
