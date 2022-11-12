@@ -20,6 +20,7 @@ red = (213, 50, 80)
 green = (0, 255, 0)
 blue = (50, 153, 213)
 
+
 dis_width = 600
 dis_height = 400
 
@@ -40,9 +41,9 @@ def Your_score(score):
     dis.blit(value, [0, 0])
 
 
-def our_snake(snake_block, snake_list):
+def our_snake(snake_block, snake_list, color=black):
     for x in snake_list:
-        pygame.draw.rect(dis, black, [x[0], x[1], snake_block, snake_block])
+        pygame.draw.rect(dis, color, [x[0], x[1], snake_block, snake_block])
 
 
 def message(msg, color):
@@ -64,6 +65,7 @@ def gameLoop():
     Length_of_snake = 1
     P_Length_of_snake = 0
     increase_speed = 0
+    c_red = 0
 
     foodx = round(random.randrange(0, dis_width - snake_block) / 10.0) * 10.0
     foody = round(random.randrange(0, dis_height - snake_block) / 10.0) * 10.0
@@ -118,7 +120,14 @@ def gameLoop():
             if x == snake_Head:
                 game_close = True
 
-        our_snake(snake_block, snake_List)
+        if Length_of_snake % 7 == 0 and P_Length_of_snake != Length_of_snake:
+            P_Length_of_snake = Length_of_snake
+            increase_speed += 5
+            c_red += 50
+            if c_red > 300:
+                c_red = 0
+
+        our_snake(snake_block, snake_List, (c_red, 138, 100))
         Your_score(Length_of_snake - 1)
 
         pygame.display.update()
@@ -128,9 +137,6 @@ def gameLoop():
             foody = round(random.randrange(0, dis_height - snake_block) / 10.0) * 10.0
             Length_of_snake += 1
 
-        if Length_of_snake % 7 == 0 and P_Length_of_snake != Length_of_snake:
-            P_Length_of_snake = Length_of_snake
-            increase_speed += 5
         clock.tick(snake_speed + increase_speed)
 
     pygame.quit()
