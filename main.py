@@ -12,6 +12,7 @@ import time
 import random
 
 pygame.init()
+pygame.mixer.init()
 
 white = (255, 255, 255)
 yellow = (255, 255, 102)
@@ -34,6 +35,19 @@ snake_speed = 9
 
 font_style = pygame.font.SysFont("bahnschrift", 25)
 score_font = pygame.font.SysFont("comicsansms", 35)
+
+
+pygame.mixer.music.load("resources/background_music.mp3")
+pygame.mixer.music.play(-1, 0)
+
+
+def play_sound(sound_type):
+    if sound_type == "crash":
+        sound = pygame.mixer.Sound("resources/crash.mp3")
+    elif sound_type == "ding":
+        sound = pygame.mixer.Sound("resources/ding.mp3")
+
+    pygame.mixer.Sound.play(sound)
 
 
 def Your_score(score):
@@ -71,7 +85,6 @@ def gameLoop():
     foody = round(random.randrange(0, dis_height - snake_block) / 10.0) * 10.0
 
     while not game_over:
-
         while game_close == True:
             dis.fill(blue)
             message("You Lost! Press C-Play Again or Q-Quit", red)
@@ -104,6 +117,7 @@ def gameLoop():
                     x1_change = 0
 
         if x1 >= dis_width or x1 < 0 or y1 >= dis_height or y1 < 0:
+            play_sound("crash")
             game_close = True
         x1 += x1_change
         y1 += y1_change
@@ -118,6 +132,7 @@ def gameLoop():
 
         for x in snake_List[:-1]:
             if x == snake_Head:
+                play_sound("crash")
                 game_close = True
 
         if Length_of_snake % 7 == 0 and P_Length_of_snake != Length_of_snake:
@@ -129,10 +144,11 @@ def gameLoop():
 
         our_snake(snake_block, snake_List, (c_red, 138, 100))
         Your_score(Length_of_snake - 1)
-
+ 
         pygame.display.update()
 
         if x1 == foodx and y1 == foody:
+            play_sound("ding")
             foodx = round(random.randrange(0, dis_width - snake_block) / 10.0) * 10.0
             foody = round(random.randrange(0, dis_height - snake_block) / 10.0) * 10.0
             Length_of_snake += 1
