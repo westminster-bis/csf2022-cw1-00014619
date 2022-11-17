@@ -19,7 +19,7 @@ yellow = (255, 255, 102)
 black = (0, 0, 0)
 red = (213, 50, 80)
 green = (0, 255, 0)
-blue = (50, 153, 213)
+blue = (109, 179, 175)
 
 
 dis_width = 600
@@ -34,7 +34,8 @@ snake_block = 10
 snake_speed = 9
 
 font_style = pygame.font.SysFont("bahnschrift", 25)
-score_font = pygame.font.SysFont("comicsansms", 35)
+# score_font = pygame.font.SysFont("comicsansms", 35)
+score_font = pygame.font.SysFont('arial',25)
 
 
 pygame.mixer.music.load("resources/background_music.mp3")
@@ -53,6 +54,7 @@ def play_sound(sound_type):
 def Your_score(score):
     value = score_font.render("Your Score: " + str(score), True, yellow)
     dis.blit(value, [0, 0])
+
 
 
 def our_snake(snake_block, snake_list, color=black):
@@ -105,7 +107,7 @@ def gameLoop():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
                     x1_change = -snake_block
-                    y1_change = 0
+                    y1_change = 0  
                 elif event.key == pygame.K_RIGHT:
                     x1_change = snake_block
                     y1_change = 0
